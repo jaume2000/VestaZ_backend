@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const referenceSet_controller_1 = require("../controllers/referenceSet.controller");
+const auth_1 = require("../middleware/auth");
+const schemaValidation_middleware_1 = require("../middleware/schemaValidation.middleware");
+const reference_schema_1 = require("../schemas/reference.schema");
+const router = (0, express_1.Router)();
+router.post('/reference_info', auth_1.auth, (0, auth_1.permission)("admin"), (0, schemaValidation_middleware_1.schemaValidation)(reference_schema_1.referenceSchema), referenceSet_controller_1.addReferenceManually);
+router.post('/product_info', auth_1.auth, (0, auth_1.permission)("admin"), (0, schemaValidation_middleware_1.schemaValidation)(reference_schema_1.referenceSchemFromProduct), referenceSet_controller_1.addReferenceFromProduct);
+router.get("/", auth_1.auth, (0, auth_1.permission)("admin"), referenceSet_controller_1.getReferences);

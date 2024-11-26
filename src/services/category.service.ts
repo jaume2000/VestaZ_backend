@@ -19,7 +19,7 @@ export async function createCategory(name: string, description: string, parentCa
         
         if(parentCategoryObj) {
             const newCategory = await Category.create({name, description, subcategories: [], parent: parentCategoryObj?._id});
-            parentCategoryObj.subcategories.push(newCategory._id as mongoose.Types.ObjectId);
+            parentCategoryObj.subcategories.push(newCategory._id);
             await parentCategoryObj.save();
         }
         else {

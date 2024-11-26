@@ -13,7 +13,7 @@ export const Category = mongoose.model<ICategory>('Category', categorySchema);
 
 export default Category;
 
-export interface ICategory extends Document {
+export interface ICategory extends Document<mongoose.Types.ObjectId> {
     name: string;
     description: string;
     subcategories: mongoose.Types.ObjectId[];

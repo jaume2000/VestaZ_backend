@@ -4,9 +4,9 @@ import { searchService } from '../services/search.service';
 
 export async function searchProducts(req: Request, res: Response): Promise<void> {
     try{
-        const {sku} = req.query;
+        const {sku, category, machine, brand} = req.query;
         console.log(sku);
-        const products = await searchService(sku as string);
+        const products = await searchService(sku as string, category as string, brand as string, machine as string);
         res.json(products);
     }
     catch(error){

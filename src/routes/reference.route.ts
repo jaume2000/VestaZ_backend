@@ -1,14 +1,16 @@
 import { Router } from 'express';
 import { register, login } from '../controllers/auth.controller';
-import { /*addReferenceFromProduct,*/ addReferenceManually, getReferences, addReferenceManuallyFromProduct } from '../controllers/referenceSet.controller';
+import { /*addReferenceFromProduct,*/ addReferenceManually, addReferenceListManually, getReferences, addReferenceManuallyFromProduct, simulateAddReferenceManually } from '../controllers/referenceSet.controller';
 import { auth, permission } from '../middleware/auth';
 import { schemaValidation } from '../middleware/schemaValidation.middleware'
-import { /*referenceSchemFromProduct,*/ referenceProductSchema, referenceSchema } from '../schemas/reference.schema';
+import { /*referenceSchemFromProduct,*/ referenceListSchema, referenceProductSchema, referenceSchema } from '../schemas/reference.schema';
 
 const router = Router();
 
 
 router.post('/reference_info', auth, permission("admin"), schemaValidation(referenceSchema), addReferenceManually);
+router.post('/reference_info/many', auth, permission("admin"), schemaValidation(referenceListSchema), addReferenceListManually);
+router.post('/simulate_reference_info', auth, permission("admin"), schemaValidation(referenceSchema), simulateAddReferenceManually);
 router.post('/reference_info_from_product', auth, permission("admin"), schemaValidation(referenceProductSchema), addReferenceManuallyFromProduct);
 router.get("/", auth, permission("admin"), getReferences)
 

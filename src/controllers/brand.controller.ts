@@ -28,3 +28,23 @@ export async function createBrand(req: Request, res: Response): Promise<void> {
         }
     }
 }
+
+export async function createBrandList(req: Request, res: Response): Promise<void> {
+    console.log("createBrandList")
+    try{
+        const brands = req.body;
+        await Promise.all(brands.map(async (brand: any) => {
+            await createBrandService(brand.name, brand.description);
+        }));
+        res.status(201).json({message: "Brands created"});
+    }catch(error){
+        console.log(error)
+        if ((error as any).message === 'Brand already exists'){
+            res.status(400).json({message: "Brand already exists"});
+            return;
+        }
+        else {
+            res.status(500).json({message: "Internal Server Error"});
+        }
+    }
+}

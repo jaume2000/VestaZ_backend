@@ -32,3 +32,17 @@ export async function createCategory(req: Request, res: Response): Promise<void>
         }
     }
 }
+
+export async function createCategoriesList(req: Request, res: Response): Promise<void> {
+    console.log("Create categories list")
+    try{
+        const categories = req.body;
+        await Promise.all(categories.map(async (category: any) => {
+            await createCategoryService(category.name, category.description, category.parent);
+        }));
+        res.status(201).json({message: "Categories created"});
+    }catch(error){
+        console.log(error)
+        res.status(500).json({message: "Internal Server Error"});
+    }
+}

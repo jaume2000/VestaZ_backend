@@ -1,6 +1,6 @@
-import { Schema, model, Document } from "mongoose";
+import mongoose, { Schema, model, Document } from "mongoose";
 
-export interface IMachine extends Document {
+export interface IMachine extends Document<mongoose.Types.ObjectId> {
   name: string;
   brand: Schema.Types.ObjectId;
 }

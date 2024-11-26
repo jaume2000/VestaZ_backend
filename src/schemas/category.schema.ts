@@ -5,3 +5,5 @@ export const categorySchema = z.object({
     description: z.string().optional(),
     parent: z.string().optional()
 });
+
+export const categoryListSchema = z.array(categorySchema);

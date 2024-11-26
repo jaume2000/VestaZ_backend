@@ -9,7 +9,7 @@ const brandSchema = new Schema({
 
 export const Brand = mongoose.model<IBrand>('Brand', brandSchema);
 
-export interface IBrand extends Document {
+export interface IBrand extends Document<mongoose.Types.ObjectId> {
     name: string;
     description: string;
 }

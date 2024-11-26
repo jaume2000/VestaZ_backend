@@ -11,7 +11,8 @@ export async function createBrand(name: string, description: string): Promise<vo
         throw new Error('Brand already exists');
     }
 
-    await Brand.create({name, description});
+    const createdBrand = await Brand.create({name, description});
+    console.log(`Brand ${createdBrand.name} created`);
 
 }
 

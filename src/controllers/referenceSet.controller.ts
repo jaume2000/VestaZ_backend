@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
-import {addReferenceManually as addReferenceManuallyService, getReferences as getReferencesService} from '../services/referenceSet.service'
+import {addReferenceManually as addReferenceManuallyService, getReferences as getReferencesService, simulateAddReferenceManuallyService} from '../services/referenceSet.service'
 import mongoose, { Types } from 'mongoose';
-import { ReferenceSet } from '../models/referenceSet.model';
+import { IReferenceSet, ReferenceSet } from '../models/referenceSet.model';
 import {Category} from '../models/category.model';
 import Product from '../models/product.model';
 import { setProcessedProduct } from '../services/product.service';
 
 export const addReferenceManually = async (req: Request, res: Response) => {
-    const { references, machines, categories} = req.body;
+    const { references, machines, categories, weight, description } = req.body;
     const user = req.user;
     if (!user){
         return;
@@ -15,9 +15,13 @@ export const addReferenceManually = async (req: Request, res: Response) => {
     try {
         
     await addReferenceManuallyService({
-        categories,
-        references,
-        machines,
+        data:{
+            references,
+            categories,
+            machines,
+            weight,
+            description
+        },
         userId: new Types.ObjectId(user.id)
     });
     res.status(200).end()
@@ -27,6 +31,53 @@ export const addReferenceManually = async (req: Request, res: Response) => {
         res.status(500).end()
     }
 };
+
+export const addReferenceListManually = async (req: Request, res: Response) => {
+    const referenceList = req.body;
+    const user = req.user;
+    if (!user){
+        return;
+    }
+    try {
+        await Promise.all(referenceList.map(async (reference: IReferenceSet) => {
+            await addReferenceManuallyService({
+                data: reference,
+                userId: new Types.ObjectId(user.id)
+            });
+        }
+        ));
+        res.status(200).end();
+    } catch (error) {
+        console.log(error);
+        res.status(500).end();
+    }
+};
+
+export const simulateAddReferenceManually = async (req: Request, res: Response) => {
+    const { references, machines, categories, weight, description } = req.body;
+    const user = req.user;
+    if (!user){
+        return;
+    }
+    try {
+        
+    const result = await simulateAddReferenceManuallyService({
+        data:{
+            references,
+            categories,
+            machines,
+            weight,
+            description
+        },
+        userId: new Types.ObjectId(user.id)
+    });
+    res.status(200).json(result)
+    }
+    catch(error){
+        console.log(error)
+        res.status(500).end()
+    }
+}
 
 export const addReferenceManuallyFromProduct = async (req: Request, res: Response) => {
     const { product_id, references, machines, categories} = req.body;
@@ -39,9 +90,11 @@ export const addReferenceManuallyFromProduct = async (req: Request, res: Respons
         await Promise.all([
             setProcessedProduct(product_id),
             addReferenceManuallyService({
-                references,
-                categories,
-                machines,
+                data:{
+                    references,
+                    categories,
+                    machines
+                },
                 userId: new Types.ObjectId(user.id)
             })
         ])

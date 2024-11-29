@@ -60,19 +60,42 @@ export const getUser = async (req: Request, res: Response) => {
   }
 
   try {
-    const user = await User
-      .findById(userId)
-      .populate({
+    const user = await User.findById(userId)
+    .populate({
       path: 'products',
       populate: [
         { path: 'brand' },
         { path: 'machines' },
-        { path: 'categories' }
-      ]
-      })
-      .exec();
+        { path: 'categories' },
+      ],
+    })
+    .populate({
+      path: 'history.searches',
+      populate: [
+        { path: 'category' },
+        { path: 'machine' },
+        { path: 'brand' },
+        {
+          path: 'results',
+          populate: [
+            { path: 'categories' },
+            { path: 'machines' },
+            { path: 'references.brand' }, // Accedemos a 'brand' dentro de 'references'
+          ],
+        },
+      ],
+    })
+    .exec();
+  
 
-    const { password, ...userWithoutPassword } = user?.toObject() as IUser;
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+      return
+    }
+    
+    const serializedUser = user.toJSON();
+
+    const { password, ...userWithoutPassword } = serializedUser;
 
     res.status(200).json(userWithoutPassword);
   } catch (error) {

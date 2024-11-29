@@ -26,7 +26,7 @@ export async function searchService(
   
       console.log("Query:", JSON.stringify(query, null, 2)); // Log para debugging
   
-      const referenceSet = await ReferenceSet.find(query);
+      const referenceSet = await ReferenceSet.find(query).populate("categories").populate("machines").populate("references.brand").exec();
   
       return referenceSet || [];
     } catch (error) {

@@ -26,7 +26,6 @@ router.post(
     auth,
     upload.single('imageFile'), // Procesar el archivo primero
     (req, res, next) => {
-        console.log("Middleware de validación");
         try {
             // Parsear y validar req.body con Zod
             req.body = clientMachineSchema.parse({

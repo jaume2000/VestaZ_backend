@@ -3,7 +3,6 @@ import User, { IUser } from "../models/user.model";
 
 export async function getUser(userId: string): Promise<IUser|null> {
     const user = await User.findById(userId);
-    console.log("history", user?.history)
     return user;
 }
 

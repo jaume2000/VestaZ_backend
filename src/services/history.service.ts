@@ -11,10 +11,6 @@ export async function getHistoryService(user_id:string) {
 
 export async function addHistoryService(inputData:HistoryInputType, results:IReferenceSet[], user_id:string) {
 
-    console.log("Results history", results);
-
-    console.log("USERID", user_id);
-
     const user = await User.findById(user_id)
     if(!user) {
         console.log("User not found");
@@ -26,11 +22,9 @@ export async function addHistoryService(inputData:HistoryInputType, results:IRef
         const chat = user.history.chats.get(sessionID);
         if (chat !== undefined) {
             chat.push(...history);
-            console.log("History", user.history.chats);
         }
         else {
             user.history.chats.set(sessionID, history);
-            console.log("History", user.history.chats);
         }
     }
     else if (inputData.type === 'search') {

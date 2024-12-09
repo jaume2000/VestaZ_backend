@@ -13,7 +13,6 @@ export async function searchReferences(req: Request, res: Response): Promise<voi
 
     try{
         const {sku, category, machine, brand} = req.query;
-        console.log(sku);
         const references = await searchService(sku as string, category as string, brand as string, machine as string);
         await addHistoryService({type: 'search', data: {
             sku: sku as string,

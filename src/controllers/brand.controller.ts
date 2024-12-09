@@ -30,7 +30,6 @@ export async function createBrand(req: Request, res: Response): Promise<void> {
 }
 
 export async function createBrandList(req: Request, res: Response): Promise<void> {
-    console.log("createBrandList")
     try{
         const brands = req.body;
         await Promise.all(brands.map(async (brand: any) => {

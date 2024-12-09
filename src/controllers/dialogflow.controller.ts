@@ -11,8 +11,6 @@ export async function chatbotChat(req: Request, res: Response): Promise<void> {
         return;
     }
 
-    console.log("User", user);
-
     const user_id = user.id;
     if (!user_id) {
         res.status(401).json({message: 'Unauthorized'});
@@ -29,9 +27,6 @@ export async function chatbotChat(req: Request, res: Response): Promise<void> {
                 timestamp: Date.now()
             }
         ];
-
-        console.log("Message", message);
-        console.log("SessionID", sessionID);
 
         const response = await chatbotService(message, sessionID);
 

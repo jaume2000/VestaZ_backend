@@ -91,10 +91,7 @@ export const getUser = async (req: Request, res: Response) => {
         {path : 'brand'}
       ]
     })
-    .exec();
-
-    console.log(user)
-  
+    .exec();  
 
     if (!user) {
       res.status(404).json({ message: 'User not found' });

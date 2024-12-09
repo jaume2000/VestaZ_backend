@@ -35,7 +35,7 @@ export async function createClientMachineService(clientMachine: Partial<ClientMa
         });
 
         // Generar la URL pública
-        const imageUrl = `https://storage.googleapis.com/${bucket.name}/client/machines/images/${fileName}`;
+        const imageUrl = `https://storage.googleapis.com/${bucket.name}/client/${user_id}/machines/images/${fileName}`;
         createdClientMachine.image_url = imageUrl; // Actualizar el documento
         await createdClientMachine.save();
     }

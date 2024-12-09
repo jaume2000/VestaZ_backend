@@ -33,7 +33,6 @@ export const permission =  (role:roleType) => async (req: Request, res: Response
   }
   
   if (user.role !== role && user.role !== 'admin') {
-    console.log(user.role, role);
     res.status(403).send('Access denied. Insufficient permissions.');
     return;
   }

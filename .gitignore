@@ -129,4 +129,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-credenciales.json
+backend_credentials.json
+chatbot_credentials.json

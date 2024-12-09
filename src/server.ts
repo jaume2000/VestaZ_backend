@@ -7,6 +7,7 @@ import categoryRoutes from './routes/category.route'
 import machineRoutes from './routes/machine.route'
 import brandRoutes from './routes/brand.route'
 import searchRoutes from './routes/search.route'
+import clientMachineRoutes from './routes/clientMachine.route';
 
 import dotenv from 'dotenv';
 import cors from 'cors'; // Importa cors
@@ -29,6 +30,9 @@ app.use('/api/category', categoryRoutes);
 app.use('/api/machine', machineRoutes);
 app.use('/api/brand', brandRoutes);
 app.use('/search/', searchRoutes);
+app.use('/api/clientMachine', clientMachineRoutes);
+app.use('/',(req,res)=>{res.status(200).json({message:'Welcome to the API'})})
+
 
 //If no route is matched by now, it must be a 404
 app.use((req, res) => {

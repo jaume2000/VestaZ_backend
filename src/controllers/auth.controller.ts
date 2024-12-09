@@ -3,6 +3,7 @@ import { setAdmin as setAdminService, getAllUsers as getAllUsersServie, setUser 
 import User, { IUser } from '../models/user.model';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import path from 'path';
 
 const saltRounds = 10;
 
@@ -84,8 +85,15 @@ export const getUser = async (req: Request, res: Response) => {
           ],
         },
       ],
+    }).populate({
+      path: 'machines',
+      populate: [
+        {path : 'brand'}
+      ]
     })
     .exec();
+
+    console.log(user)
   
 
     if (!user) {

@@ -30,6 +30,7 @@ export interface IUser extends Document {
   role: string;
   products: mongoose.Types.ObjectId[];
   history: IHistory;
+  machines: mongoose.Types.ObjectId[];
 }
 
 // Define el esquema para chats
@@ -86,6 +87,9 @@ const userSchema: Schema = new Schema(
     role: { type: String, required: false, default: "user" },
     products: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: false, default: [] },
+    ],
+    machines: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "ClientMachine", required: false, default: [] },
     ],
     history: { type: historySchema, required: false}, // Conecta el subdocumento de historial
   },

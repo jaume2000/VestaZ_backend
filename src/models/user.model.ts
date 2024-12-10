@@ -91,7 +91,12 @@ const userSchema: Schema = new Schema(
     machines: [
       { type: mongoose.Schema.Types.ObjectId, ref: "ClientMachine", required: false, default: [] },
     ],
-    history: { type: historySchema, required: false}, // Conecta el subdocumento de historial
+    history: { type: historySchema, required: false, default:
+      {
+        chats: {},
+        searches: [],
+      },
+    }, // Conecta el subdocumento de historial
   },
   { timestamps: true }
 );

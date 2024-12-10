@@ -1,0 +1,13 @@
+runtime: nodejs22
+
+env_variables:
+  MONGO_URI: "mongodb+srv://vestazpro:uYEHsGLF0qexYbE7@vestaz.hcbfy.mongodb.net/?retryWrites=true&w=majority&appName=VestaZ"
+  PORT: 8080
+  JWT_SECRET: "vesta_2024_secret!$%&"
+  PROJECT_ID: "chatbot-vestaz-con-bbdd"
+  LOCATION: "europe-west1"
+  AGENT_ID: "58096746-04f1-444e-bf73-9510dfdd9055"
+  LANGUAGE_CODE: "es"
+  GOOGLE_APPLICATION_CREDENTIALS: "backend_credentials.json"
+
+

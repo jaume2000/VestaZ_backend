@@ -20,6 +20,7 @@ export const register = async (req: Request, res: Response) => {
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
     res.header('Authorization', `Bearer ${token}`).json({ token });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: 'Error registering user' });
   }
 };
@@ -47,7 +48,8 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET!, { expiresIn: '6h' });
     res.header('Authorization', `Bearer ${token}`).json({ token });
   } catch (error) {
-    res.status(500).json({ message: 'Error logging in' });
+    console.log(error)
+    res.status(500).json({ message: 'Error logging in', error: error });
   }
 };
 
